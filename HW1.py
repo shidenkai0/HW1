@@ -16,6 +16,7 @@ print "Third Party Libs Imported\n"
 
 ls_symbols = ["AAPL", "GLD", "GOOG", "$SPX", "XOM"]
 t=ls_symbols, "Hey"
+print "Tuple tested"
 
 #Setting up timestamps for 2011
 
