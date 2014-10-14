@@ -28,11 +28,12 @@ c_dataobj = da.DataAccess('Yahoo')
 
 def simulate(dt_start, dt_end, ls_symbols, attribution):
 
-    ldt_timestamps = du.getNYSEdays(dt_start, dt_end, dt_timeofday)
+
     #Checking validity of attribution
     if sum(attribution)!=1:
         return {'avg': noVal, 'std': noVal, 'sharpe': noVal}
 
+    ldt_timestamps = du.getNYSEdays(dt_start, dt_end, dt_timeofday)
     #Getting required data from Yahoo
     ldf_data = c_dataobj.get_data(ldt_timestamps, ls_symbols, ls_keys)
 
@@ -44,7 +45,7 @@ def simulate(dt_start, dt_end, ls_symbols, attribution):
     na_normalized_price=na_price/na_price[0, :]
     na_portfolio_price=np.dot(na_normalized_price,np.asmatrix(attribution).transpose())
     na_portfolio_rets=na_portfolio_price.copy()
-    na_portfolio_rets=tsu.daily(na_portfolio_rets)
+    na_portfolio_rets=tsu.returnize0(na_portfolio_rets)
 
     #Computing Sharpe Ratio
     avg_daily_ret=np.average(na_portfolio_rets)
